@@ -1,0 +1,61 @@
+/* Mengimpor file CSS dari vendor */
+/* app.css */
+
+/* app.css */
+
+@import url("/public/css/bootstrap1.min.css");
+
+/* Themefy Icons */
+@import url("/public/vendors/themefy_icon/themify-icons.css");
+
+/* Swiper Slider */
+@import url("/public/vendors/swiper_slider/css/swiper.min.css");
+
+/* Select2 */
+@import url("/public/vendors/select2/css/select2.min.css");
+
+/* Nice Select */
+@import url("/public/vendors/niceselect/css/nice-select.css");
+
+/* Owl Carousel */
+@import url("/public/vendors/owl_carousel/css/owl.carousel.css");
+
+/* Gijgo */
+@import url("/public/vendors/gijgo/gijgo.min.css");
+
+/* Font Awesome */
+@import url("/public/vendors/font_awesome/css/all.min.css");
+
+/* Tags Input */
+@import url("/public/vendors/tagsinput/tagsinput.css");
+
+/* DataTables */
+@import url("/public/vendors/datatable/css/jquery.dataTables.min.css");
+@import url("/public/vendors/datatable/css/responsive.dataTables.min.css");
+@import url("/public/vendors/datatable/css/buttons.dataTables.min.css");
+
+/* Text Editor */
+@import url("/public/vendors/text_editor/summernote-bs4.css");
+
+/* Morris */
+@import url("/public/vendors/morris/morris.css");
+
+/* Material Icons */
+@import url("/public/vendors/material_icon/material-icons.css");
+
+/* MetisMenu */
+@import url("/public/css/metisMenu.css");
+
+/* Custom Style */
+@import url("/public/css/style1.css");
+
+/* Color Skin */
+@import url("/public/css/colors/default.css");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[x-cloak] {
+    display: none;
+}
