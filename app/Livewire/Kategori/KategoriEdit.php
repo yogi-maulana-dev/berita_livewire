@@ -5,7 +5,7 @@ namespace App\Livewire\Kategori;
 use Livewire\Component;
 use App\Models\Kategori;
 use Livewire\Attributes\On;
-use App\Livewire\Forms\KategoriForm;
+use App\Livewire\Forms\Kategori\KategoriForm;
 use App\Livewire\Kategori\KategoriTable;
 
 class KategoriEdit extends Component

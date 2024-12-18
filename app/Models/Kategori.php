@@ -9,12 +9,12 @@ class Kategori extends Model
 {
     use HasFactory;
 
-    public $table = 'kategori';
+    public $table = 'categories';
 
-    protected $fillable = ['id', 'nama'];
+    protected $fillable = ['name'];
 
     public function berita()
     {
-        return $this->hasMany(Berita::class, 'kategori_id');
+        return $this->hasMany(Berita::class, 'category_id ');
     }
 }

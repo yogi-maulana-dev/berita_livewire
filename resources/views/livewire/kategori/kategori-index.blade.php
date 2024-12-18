@@ -28,6 +28,7 @@
 
                         {{--  ini tabel  --}}
                         <livewire:kategori.kategori-table />
+                        <livewire:kategori.kategori-edit />
                     </div>
                 </div>
             </div>
