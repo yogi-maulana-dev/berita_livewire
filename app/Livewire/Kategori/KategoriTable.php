@@ -15,8 +15,8 @@ class KategoriTable extends Component
     public KategoriForm $form;
 
     #[On('dispatch-kategori-create-save')]
-    #[On('dispatch-kategori-create-edit')]
-    #[On('dispatch-kategori-delete-hapus')]
+    #[On('dispatch-kategori-table-edit')]
+
     public function render()
     {
         // return view('livewire.kategori.kategori-table', [
@@ -26,6 +26,8 @@ class KategoriTable extends Component
         //         ->paginate($this->paginate),
         // ]);
 
-        return view('livewire.kategori.kategori-table');
+        return view('livewire.kategori.kategori-table',[
+            'data'=> Kategori::all()
+        ]);
     }
 }

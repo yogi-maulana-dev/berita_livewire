@@ -18,27 +18,39 @@ table.dataTable.dtr-inline.collapsed
   > tbody
   > tr[role="row"]
   > td:first-child:before,
-table.dataTable.dtr-inline.collapsed
+  table.dataTable.dtr-inline.collapsed
   > tbody
   > tr[role="row"]
-  > th:first-child:before {
+  > td:first-child:before,
+  table.dataTable.dtr-inline.collapsed
+  > tbody
+  > tr[role="row"]
+  > th:first-child:after {
   top: 20px;
   left: 4px;
   height: 14px;
   width: 14px;
   display: block;
   position: absolute;
-  color: white;
-  border: 2px solid white;
+  color: rgb(0, 0, 0);
+  border: 2px solid rgb(0, 255, 85);
   border-radius: 14px;
   box-shadow: 0 0 3px #444;
   box-sizing: content-box;
   text-align: center;
   text-indent: 0 !important;
   line-height: 14px;
-  content: "+";
   background-color: #ff3b00;
   z-index: 9;
+  content: "+";
+}
+
+table.dataTable.dtr-inline.collapsed
+  > tbody
+  > tr[role="row"]
+  > th:first-child:after {
+  left: calc(4px + 20px); /* Adjust the positioning for the back content */
+  color: rgb(255, 255, 255); /* Optional: Color change for the 'after' content */
 }
 table.dataTable.dtr-inline.collapsed
   > tbody
@@ -86,7 +98,7 @@ table.dataTable.dtr-column > tbody > tr > th.control:before {
   margin-left: -10px;
   display: block;
   position: absolute;
-  color: white;
+  color: rgb(0, 224, 0);
   border: 2px solid white;
   border-radius: 14px;
   box-shadow: 0 0 3px #444;

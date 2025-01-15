@@ -1,3 +1,7 @@
+import "toastify-js/src/toastify.css"
+import Toastify from 'toastify-js'
+
+window.Toastify = Toastify;
 // // Import local JS files
 // import "../js/jquery1-3.4.1.min.js";
 // import "../js/popper1.min.js";

@@ -2,8 +2,8 @@
 
 namespace App\Livewire\Kategori;
 
-use App\Livewire\Forms\KategoriForm;
 use Livewire\Component;
+use App\Livewire\Forms\Kategori\KategoriForm;
 use App\Livewire\Kategori\KategoriTable;
 
 class KategoriCreate extends Component
