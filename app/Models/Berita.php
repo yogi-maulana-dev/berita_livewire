@@ -2,24 +2,16 @@
 
 namespace App\Models;
 
-use App\Traits\Sigerprojectuuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Berita extends Model
 {
-    use HasFactory, Sigerprojectuuid;
+    use HasFactory;
 
-    protected $fillable = [
-        'judul',
-        'slug',
-        'konten',
-        'penulis_id',
-        'kategori_id',
-        'gambar',
-        'status',
-        'tanggal_publikasi',
-    ];
+    public $table = 'berita';
+
+    protected $fillable = ['judul', 'slug', 'konten', 'penulis_id', 'kategori_id', 'subkategori_id', 'gambar',  'type', 'views', 'shares', 'status', 'tanggal_publikasi'];
 
     public function penulis()
     {

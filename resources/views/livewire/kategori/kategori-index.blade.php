@@ -29,6 +29,7 @@
                         {{--  ini tabel  --}}
                         <livewire:kategori.kategori-table />
                         <livewire:kategori.kategori-edit />
+                        <livewire:kategori.kategori-hapus />
                     </div>
                 </div>
             </div>

@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Kategori;
 
-use App\Livewire\Forms\KategoriForm;
+use App\Livewire\Forms\Kategori\KategoriForm;
 use App\Models\Kategori;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -16,7 +16,7 @@ class KategoriTable extends Component
 
     #[On('dispatch-kategori-create-save')]
     #[On('dispatch-kategori-table-edit')]
-
+    #[On('dispatch-kategori-table-hapus')]
     public function render()
     {
         // return view('livewire.kategori.kategori-table', [
@@ -26,8 +26,8 @@ class KategoriTable extends Component
         //         ->paginate($this->paginate),
         // ]);
 
-        return view('livewire.kategori.kategori-table',[
-            'data'=> Kategori::all()
+        return view('livewire.kategori.kategori-table', [
+            'data' => Kategori::all(),
         ]);
     }
 }

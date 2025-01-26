@@ -3,6 +3,10 @@
 namespace App\Livewire\Forms\Berita;
 
 use App\Models\Berita;
+use App\Models\Kategori;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Livewire\Form;
@@ -10,17 +14,11 @@ use Livewire\WithFileUploads;
 
 class BeritaForm extends Form
 {
-    //
-
     use WithFileUploads;
 
     public ?Berita $berita;
 
     public $judul;
-
-    public $gambar_berita;
-
-    // public $diskusi_gambar;
 
     public $slug;
 
@@ -30,100 +28,136 @@ class BeritaForm extends Form
 
     public $kategori_id;
 
-    public $jawaban;
+    public $gambar;
+
+    public $type;
+
+    public $status; // Menyimpan nilai boolean
+
+    public $tanggal_publikasi;
 
     public $id;
 
-    protected $rules = [
-        'soal' => 'required|min:3',
-        'gambar_pertanyaan' => 'nullable|image|max:1024',
-        'diskusi_gambar' => 'nullable|image|max:1024',
-        'diskusi' => 'nullable|string',
-        'kategori_id' => 'required|integer',
-        'jawaban' => 'required|integer',
-    ];
+    protected function rules()
+    {
+        return [
+            'judul' => 'required|min:3',
+            'slug' => 'required|string',
+            'konten' => 'required|string',
+            'kategori_id' => 'required|integer',
+            'gambar' => 'nullable|image|max:1024',
+        ];
+    }
 
     public $oldGambarBerita;
 
-    public $oldGambarDiskusi;
+    public $kotentex;
 
     public function mount()
     {
         // Inisialisasi dengan gambar lama jika ada
-        $this->oldGambarBerita = $this->pertanyaan->gambar_pertanyaan ?? null;
-        // $this->oldGambarDiskusi = $this->pertanyaan->diskusi_gambar ?? null;
+        $this->oldGambarBerita = $this->berita->gambar ?? null;
+        $this->kotentex = $this->berita->konten ?? null;
     }
 
     public function setBerita(Berita $berita)
     {
-        $this->id = $berita->id;
         $this->berita = $berita;
-        $this->soal = $berita->soal;
-        $this->gambar_berita = null;
-        $this->diskusi_gambar = null;
-        $this->diskusi = $berita->diskusi;
+        $this->judul = $berita->judul;
+        $this->slug = $berita->slug;
+        $this->konten = $berita->konten;  // tambahkan ini jika belum ada
+        $this->kotentex = $berita->konten;  // ini yang akan ditampilkan di textarea
         $this->kategori_id = $berita->kategori_id;
-        $this->jawaban = $berita->jawaban;
-        $this->id = $berita->id;
-        $this->oldGambarBerita = $berita->gambar_berita;
-        // $this->oldGambarDiskusi = $pertanyaan->diskusi_gambar;
+
+        // Ubah status menjadi boolean
+        $this->status = $berita->status;
+        $this->type = $berita->type;
+        $this->gambar = null;
+        $this->oldGambarBerita = $berita->gambar;
+
+    }
+
+    public function setKategori(): array
+    {
+        $setKategori = [];
+        $kategoris = Kategori::select('id', 'nama')->get();
+
+        foreach ($kategoris as $ind => $data) {
+            $setKategori[$ind] = ['id' => $data->id, 'nama' => $data->nama];
+        }
+
+        return $setKategori;
     }
 
     public function store()
     {
-        $data = $this->validate();
-
-        if ($this->gambar_berita instanceof UploadedFile) {
-            $data['gambar_berita'] = $this->gambar_berita->store('gambar_berita', 'public');
-        }
-
-        // if ($this->diskusi_gambar instanceof UploadedFile) {
-        //     $data['diskusi_gambar'] = $this->diskusi_gambar->store('diskusi_gambar', 'public');
-        // }
 
         try {
+
+            $data = $this->validate();
+            $data = [
+                'judul' => $this->judul,
+                'slug' => $this->slug,
+                'konten' => $this->konten,
+                'penulis_id' => Auth::id(),
+                'kategori_id' => $this->kategori_id,
+                'type' => $this->type,
+                'status' => '2',
+                'tanggal_publikasi' => Carbon::now('Asia/Jakarta'),
+            ];
+
+            if ($this->gambar instanceof UploadedFile) {
+                $data['gambar'] = $this->gambar->store('gambar', 'public');
+            }
+
             Berita::create($data);
-            $this->reset(['soal', 'gambar_berita', 'diskusi_gambar', 'diskusi', 'kategori_id', 'jawaban']);
-        } catch (\Exception $e) {
-            Log::error('Failed to create Pertanyaan: ' . $e->getMessage());
+
+            Log::info('Berita created successfully', $data);
+
+            $this->reset(['judul', 'slug', 'konten', 'kategori_id', 'type', 'gambar']);
 
             return null;
+        } catch (\Exception $e) {
+            Log::error('Failed to create gaganya Berita: '.$e->getMessage());
+
+            return $e->getMessage();
         }
     }
 
     public function update()
     {
-        $this->validate();
+        try {
+            $data = [
+                'judul' => $this->judul,
+                'slug' => $this->slug,
+                'konten' => $this->konten,
+                'penulis_id' => Auth::id(),
+                'kategori_id' => $this->kategori_id,
+                'type' => $this->type,
+                'status' => '2',
+                'tanggal_publikasi' => $this->status ? Carbon::now('Asia/Jakarta') : null,
+            ];
 
-        $data = $this->except(['pertanyaan', 'oldGambarBerita', 'oldGambarDiskusi']);
+            if ($this->gambar instanceof UploadedFile) {
+                $data['gambar'] = $this->gambar->store('gambar', 'public');
+                $this->deleteOldFile($this->oldGambarBerita);
+            }
 
-        // Handle gambar_berita
-        if ($this->gambar_berita instanceof UploadedFile) {
-            $this->deleteOldFile($this->berita->gambar_berita);
-            $data['gambar_berita'] = $this->gambar_berita->store('gambar_berita', 'public');
-        } else {
-            // Jika tidak ada perubahan, gunakan gambar yang ada
-            $data['gambar_berita'] = $this->berita->gambar_berita;
+            $this->berita->update($data);
+            Log::info('Data berhasil diperbarui:', $data);
+
+            return true;
+        } catch (\Exception $e) {
+            Log::error('Gagal memperbarui data:', ['error' => $e->getMessage()]);
+
+            return false;
         }
-
-        // Handle diskusi_gambar
-        if ($this->diskusi_gambar instanceof UploadedFile) {
-            $this->deleteOldFile($this->berita->diskusi_gambar);
-            $data['diskusi_gambar'] = $this->diskusi_gambar->store('diskusi_gambar', 'public');
-        } else {
-            // Jika tidak ada perubahan, gunakan gambar yang ada
-            $data['diskusi_gambar'] = $this->berita->diskusi_gambar;
-        }
-
-        $this->berita->update($data);
-
-        return $this->berita;
     }
 
     private function deleteOldFile($path)
     {
         if ($path) {
-            $fullPath = public_path('storage/' . $path);
+            $fullPath = public_path('storage/'.$path);
             if (File::exists($fullPath)) {
                 File::delete($fullPath);
             }

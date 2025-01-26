@@ -1,7 +1,11 @@
-import "toastify-js/src/toastify.css"
-import Toastify from 'toastify-js'
+import "toastify-js/src/toastify.css";
+import Toastify from "toastify-js";
 
 window.Toastify = Toastify;
+import "tom-select/dist/css/tom-select.default.css";
+import TomSelect from "tom-select";
+window.Tom = TomSelect;
+
 // // Import local JS files
 // import "../js/jquery1-3.4.1.min.js";
 // import "../js/popper1.min.js";

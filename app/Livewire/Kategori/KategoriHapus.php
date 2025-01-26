@@ -2,37 +2,38 @@
 
 namespace App\Livewire\Kategori;
 
-use Livewire\Component;
 use App\Models\Kategori;
-use Livewire\Attributes\On;
 use Livewire\Attributes\Locked;
-use App\Livewire\Kategori\KategoriTable;
+use Livewire\Attributes\On;
+use Livewire\Component;
 
 class KategoriHapus extends Component
 {
-
     #[Locked]
     public $id;
+
     #[Locked]
     public $nama;
 
     public $modalKategoriHapus = false;
 
     #[On('dispatch-kategori-table-hapus')]
-    public function set_kategori($id, $nama){
-        $this->id=$id;
-        $this->nama=$nama;
+    public function set_kategori($id, $nama)
+    {
+        $this->id = $id;
+        $this->nama = $nama;
 
-        $this->modalKategoriHapus =true;
+        $this->modalKategoriHapus = true;
     }
 
-    public function hapus(){
-        $hapus= Kategori::destroy($this->id);
+    public function hapus()
+    {
+        $hapus = Kategori::destroy($this->id);
 
         ($hapus) ? $this->dispatch('notifity', title: 'success', message: 'Selamat anda berhasil Dihapus')
         : $this->dispatch('notifity', title: 'failed', message: 'Selamat anda berhasil');
         $this->modalKategoriHapus = false;
-        $this->dispatch('dispatch-kategori-delete-hapus')->to(KategoriTable::class);
+        $this->dispatch('dispatch-kategori-table-hapus')->to(KategoriTable::class);
     }
 
     public function render()

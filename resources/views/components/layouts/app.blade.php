@@ -8,15 +8,36 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Hospital</title>
 
-    <link rel="icon" href="img/logo.png" type="image/png">
+    <link rel="icon" href="frontend/assets/img/logox.jpeg" type="image/jpeg">
     <!-- Bootstrap CSS -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- Di bagian head -->
 
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="{{ asset('/js/jquery1-3.4.1.min.js') }}"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/2.2.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.bootstrap5.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tom-select@2.0.0/dist/css/tom-select.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.0.0/dist/css/tom-select.css" rel="stylesheet">
+
+    <script src="https://cdn.ckeditor.com/4.21.0/full-all/ckeditor.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet">
     @livewireStyles
 
 </head>
 
 <body class="crm_body_bg">
+
+    <x-notifikasi />
+
+
 
     <!-- main content part here -->
     <!-- sidebar  -->
@@ -86,6 +107,7 @@
             </div>
         </div>
         <!--/ menu  -->
+
         {{ $slot }}
 
         <!-- footer part -->
@@ -104,17 +126,18 @@
     </section>
     <!-- main content part end -->
 
-    <x-notifikasi />
+
+    <!-- Di bagian bawah sebelum </body> -->
+
+
+    {{--  <x-notifikasi />  --}}
+
     @stack('modals')
-    @livewireScripts
 
+    @stack('scripts')
 
-    <!-- footer  -->
-    <!-- jquery slim -->
-
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.0/dist/js/tom-select.complete.min.js"></script>
     <!-- jQuery -->
-    <script src="{{ asset('/js/jquery1-3.4.1.min.js') }}"></script>
-    <!-- Popper JS -->
     <script src="{{ asset('/js/popper1.min.js') }}"></script>
     <!-- Bootstrap JS -->
     <script src="{{ asset('/js/bootstrap1.min.js') }}"></script>
@@ -135,16 +158,21 @@
     <!-- Gijgo -->
     <script src="{{ asset('/vendors/gijgo/gijgo.min.js') }}"></script>
     <!-- Responsive Table -->
-    <script src="{{ asset('/vendors/datatable/js/jquery.dataTables.min.js') }}"></script>
+    {{--  <script src="{{ asset('/vendors/datatable/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('/vendors/datatable/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('/vendors/datatable/js/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('/vendors/datatable/js/buttons.flash.min.js') }}"></script>
-    <script src="{{ asset('/vendors/datatable/js/jszip.min.js') }}"></script>
-    <script src="{{ asset('/vendors/datatable/js/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('/vendors/datatable/js/vfs_fonts.js') }}"></script>
-    <script src="{{ asset('/vendors/datatable/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('/vendors/datatable/js/buttons.print.min.js') }}"></script>
-    <!-- Chart -->
+    <script src="{{ asset('/vendors/datatable/js/dataTables.buttons.min.js') }}"></script>  --}}
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/2.2.1/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.2.1/js/dataTables.bootstrap5.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.bootstrap5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+
+
     <script src="{{ asset('/js/chart.min.js') }}"></script>
     <!-- Progressbar -->
     <script src="{{ asset('/vendors/progressbar/jquery.barfiller.js') }}"></script>
@@ -157,9 +185,17 @@
     <!-- Custom JS -->
     <script src="{{ asset('/js/custom.js') }}"></script>
 
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable({
+                responsive: true,
+                autoWidth: false,
+                order: []
+            });
+        });
+    </script>
 
-
-
+    @livewireScripts
 </body>
 
 

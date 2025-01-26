@@ -30,9 +30,9 @@
 @import url("/public/vendors/tagsinput/tagsinput.css");
 
 /* DataTables */
-@import url("/public/vendors/datatable/css/jquery.dataTables.min.css");
-@import url("/public/vendors/datatable/css/responsive.dataTables.min.css");
-@import url("/public/vendors/datatable/css/buttons.dataTables.min.css");
+/* @import url("/public/vendors/datatable/css/jquery.dataTables.min.css"); */
+/* @import url("/public/vendors/datatable/css/responsive.dataTables.min.css"); */
+/* @import url("/public/vendors/datatable/css/buttons.dataTables.min.css"); */
 
 /* Text Editor */
 @import url("/public/vendors/text_editor/summernote-bs4.css");

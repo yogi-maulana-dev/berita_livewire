@@ -1,7 +1,10 @@
-@props(['id' => null, 'maxWidth' => null, 'submit'=> null])
+@props(['id' => null, 'maxWidth' => null, 'submit' => null])
+
 
 <x-modal :id="$id" :maxWidth="$maxWidth" {{ $attributes }}>
-    @if($submit)<form wire:submit="{{ $submit }}">@endif
+    @if ($submit)
+        <form wire:submit="{{ $submit }}">
+    @endif
     <div class="px-6 py-4">
         <div class="text-lg font-medium text-gray-900">
             {{ $title }}
@@ -15,5 +18,7 @@
     <div class="flex flex-row justify-end px-6 py-4 bg-gray-100 text-end">
         {{ $footer }}
     </div>
-    @if($submit)</form>@endif
+    @if ($submit)
+        </form>
+    @endif
 </x-modal>

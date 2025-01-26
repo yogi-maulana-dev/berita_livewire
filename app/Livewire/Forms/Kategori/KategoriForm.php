@@ -2,32 +2,42 @@
 
 namespace App\Livewire\Forms\Kategori;
 
-use Livewire\Form;
 use App\Models\Kategori;
 use Livewire\Attributes\Rule;
-use Livewire\Attributes\Validate;
+use Livewire\Form;
 
 class KategoriForm extends Form
 {
     //
 
     public ?Kategori $kategori;
+
     #[Rule('required|min:3')]
-    public $name;
+    public $nama;
+
     public $id;
+
+    // public function setKategori(Kategori $kategori)
+    // {
+    //     $this->kategori = $kategori;
+    //     $this->nama = $kategori->nama;
+    // }
 
     public function setKategori(Kategori $kategori)
     {
-        $this->kategori=$kategori;
-        $this->name =$kategori->name;
+        $this->Kategori = $kategori;
+        $this->nama = $kategori->nama;
+
     }
 
-    public function store(){
+    public function store()
+    {
         Kategori::create($this->except('kategori'));
         $this->reset();
     }
-    public function update(){
+
+    public function update()
+    {
         $this->kategori->update($this->except('kategori'));
     }
-
 }

@@ -2,16 +2,15 @@
 
 namespace App\Livewire\Kategori;
 
-use Livewire\Component;
+use App\Livewire\Forms\Kategori\KategoriForm;
 use App\Models\Kategori;
 use Livewire\Attributes\On;
-use App\Livewire\Forms\Kategori\KategoriForm;
-use App\Livewire\Kategori\KategoriTable;
+use Livewire\Component;
 
 class KategoriEdit extends Component
 {
-
     public KategoriForm $form;
+
     public $modalKategoriEdit = false;
 
     #[On('dispatch-kategori-table-edit')]
@@ -21,10 +20,10 @@ class KategoriEdit extends Component
         $this->modalKategoriEdit = true;
     }
 
-    public function edit(){
+    public function edit()
+    {
         $this->form->validate();
         $update = $this->form->update();
-
 
         is_null($update) ? $this->dispatch('notifity', title: 'success', message: 'Selamat anda berhasil') : $this->dispatch('notifity', title: 'failed', message: 'Selamat anda berhasil');
         $this->dispatch('dispatch-kategori-create-save')->to(KategoriTable::class);

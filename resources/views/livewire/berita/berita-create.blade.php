@@ -1,99 +1,250 @@
 <div>
-    <x-button @click="$wire.set('modalBeritaCreate', true)">
-        Buat Soal
-    </x-button>
+    <div class="main_content_iner">
+        <div class="container-fluid p-0">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12">
+                            <div class="white_box mb_30 p-4">
+                                <form wire:submit.prevent="save">
+                                    <!-- Nama Kategori -->
+                                    <div class="mb-4">
+                                        <x-label for="kategori_id" value="Pilih Kategori" />
+                                        <x-tom x-init="$el.kategori = new Tom($el, {
+                                            sortField: {
+                                                field: 'nama',
+                                                direction: 'asc'
+                                            },
+                                            valueField: 'id',
+                                            labelField: 'nama',
+                                            searchField: 'nama',
+                                            options: {{ json_encode($kategoris) }}
+                                        });"
+                                            @set-kategori-create.window="
+                                            $el.kategori.addOptions(event.detail.data);"
+                                            @set-reset.window="$el.kategori.clear()" wire:model.live="kategori_id"
+                                            id="kategori-create" class="mt-1 w-full" required
+                                            autocomplete="kategori-create">
+                                            <option value="">Pilih Kategori</option>
+                                        </x-tom>
+                                        <x-input-error for="kategori_id" class="mt-1" />
+                                    </div>
 
-    <x-dialog-modal wire:model.live="modalBeritaCreate" submit="save">
-        <x-slot name="title">
-            Soal Tambah
-        </x-slot>
+                                    {{--  <div class="mb-4">
+                                        <x-label for="subkategori_id" value="Pilih Sub Kategori" />
+                                        <x-tom x-init="$el.subkategori = new Tom($el, {
+                                            sortField: {
+                                                field: 'nama_sub',
+                                                direction: 'asc'
+                                            },
+                                            valueField: 'id',
+                                            labelField: 'nama_sub',
+                                            searchField: 'nama_sub',
+                                            options: {{ json_encode($subkategoris) }}
+                                        });"
+                                            @set-subkategori-create.window="
+                                              $el.subkategori.addOptions(event.detail.data);"
+                                            @set-reset.window="$el.subkategori.clear()" wire:model.live="subkategori_id"
+                                            id="subkategori-create" class="mt-1 w-full" required
+                                            autocomplete="subkategori-create">
+                                            <option value="">Pilih Sub Kategori</option>
+                                        </x-tom>
+                                        <x-input-error for="subkategori_id" class="mt-1" />
+                                    </div>  --}}
 
-        <x-slot name="content">
-            <div class="grid grid-cols-12 gap-4">
-                <!-- Nama Kategori -->
-                <div class="col-span-12">
-                    <x-label for="form.kategori_id" value="Nama Kategori" />
-                    <select wire:model="form.kategori_id" id="form.kategori_id" class="w-full mt-1" required>
-                        <!-- Populate options dynamically -->
-                        <option value="">Pilih Data</option>
-                        {{--  @foreach ($kategori as $category)
-                            <option value="{{ $category->id }}">{{ $category->nama }}</option>
-                        @endforeach  --}}
-                    </select>
-                    <x-input-error for="form.kategori_id" class="mt-1" />
-                </div>
+                                    {{--  <div class="mb-4">
+                                        <x-label for="subkategori_id" value="Pilih Sub Kategori" />
+                                        <x-tom x-init="$el.subkategori = new Tom($el, {
+                                            sortField: {
+                                                field: 'nama_sub',
+                                                direction: 'asc'
+                                            },
+                                            valueField: 'id',
+                                            labelField: 'nama_sub',
+                                            searchField: 'nama_sub',
+                                            options: {{ json_encode($subkategoris) }},
+                                            placeholder: 'Pilih Sub Kategori'
+                                        });"
+                                            @set-subkategori-create.window="
+                                        $el.subkategori.clear();
+                                        $el.subkategori.clearOptions();
+                                        if (event.detail.data.length > 0) {
+                                            $el.subkategori.addOptions(event.detail.data);
+                                            $el.subkategori.enable();
+                                        } else {
+                                            $el.subkategori.disable();
+                                        }"
+                                                                        wire:model="subkategori_id" id="subkategori-create" class="mt-1 w-full"
+                                            required autocomplete="subkategori-create">
+                                            <option value=""></option>
+                                        </x-tom>
+                                        <x-input-error for="subkategori_id" class="mt-1" />
+                                    </div>  --}}
+                                    <div class="mb-4">
+                                        <x-label for="subkategori_id" value="Pilih Sub Kategori" />
+                                        <x-tom x-init="$el.subkategori = new Tom($el, {
+                                            sortField: {
+                                                field: 'nama_sub',
+                                                direction: 'asc'
+                                            },
+                                            valueField: 'id',
+                                            labelField: 'nama_sub',
+                                            searchField: 'nama_sub',
+                                            options: {{ json_encode($subkategoris) }},
+                                            placeholder: 'Pilih Sub Kategori'
+                                        });"
+                                            @set-subkategori-create.window="
+                                              $el.subkategori.addOptions(event.detail.data); $el.subkategori.clear();
+                                                if (event.detail.data.length > 0) {
+                                                    $el.subkategori.clearOptions();
+                                                    $el.subkategori.addOptions(event.detail.data);
+                                                    $el.subkategori.enable();
+                                                } else {
+                                                    $el.subkategori.clearOptions();
+                                                    $el.subkategori.disable();
+                                                }"
+                                            wire:model="subkategori_id" id="subkategori-create" class="mt-1 w-full"
+                                            required autocomplete="subkategori-create">
+                                            <option value="">Pilih Sub Kategori</option>
+                                        </x-tom>
+                                        <x-input-error for="subkategori_id" class="mt-1" />
+                                    </div>
 
-                <!-- Soal -->
-                <div class="col-span-12">
-                    <x-label for="form.soal" value="Soal" />
-                    <textarea wire:model="form.soal" id="form.soal" class="w-full mt-1" required></textarea>
-                    <x-input-error for="form.soal" class="mt-1" />
-                </div>
+                                    <!-- Judul -->
+                                    <div class="mb-4">
+                                        <x-label for="judul" value="Isi Judul" />
+                                        <x-input wire:model.live="judul" id="judul" class="w-full mt-1" />
+                                        <x-input-error for="judul" class="mt-1" />
+                                    </div>
 
-                <!-- Gambar Pertanyaan -->
-                <div class="col-span-12">
-                    <x-label for="form.gambar_pertanyaan" value="Gambar Pertanyaan" />
-                    <input wire:model="form.gambar_pertanyaan" id="form.gambar_pertanyaan" type="file"
-                        class="w-full mt-1" accept=".jpg,.jpeg,.png" />
-                    <!-- Pratinjau Gambar Pertanyaan -->
-                    @if ($gambarPertanyaanPreview)
-                        <div class="mt-2">
-                            <span>Pratinjau Gambar Pertanyaan:</span>
-                            <img src="{{ $gambarPertanyaanPreview }}" alt="Pratinjau Gambar Pertanyaan" class="mt-2"
-                                style="max-width: 200px;">
+                                    <!-- Slug -->
+                                    <div class="mb-4">
+                                        <x-label for="slug" value="URL Preview" />
+                                        <div
+                                            class="flex items-center mt-1 space-x-2 text-gray-600 bg-gray-100 p-2 rounded">
+                                            <span class="text-gray-500">{{ url('/') }}/</span>
+                                            <span class="font-medium">{{ $slug ?: 'url-akan-muncul-disini' }}</span>
+                                        </div>
+                                        <x-input wire:model="slug" id="slug" class="w-full mt-1" readonly
+                                            placeholder="Slug akan terisi otomatis" />
+                                    </div>
+
+                                    <!-- Type Video -->
+                                    <div class="mb-4">
+                                        <x-label for="type" value="Pilih Tipe" />
+                                        <select wire:model.live="type" id="type"
+                                            class="w-full mt-1 border-gray-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                                            <option value="">-- Pilih Tipe --</option>
+                                            <option value="1">Berita</option>
+                                            <option value="2">Video</option>
+                                        </select>
+
+                                        <x-input-error for="type" class="mt-1" />
+                                    </div>
+
+
+                                    <!-- Konten -->
+                                    <div class="mb-4" wire:ignore>
+                                        <x-label for="konten" value="Isi Konten" />
+                                        <textarea id="konten" wire:model.defer="konten" class="w-full mt-1 rounded-md border-gray-300 shadow-sm">{!! $konten !!}</textarea>
+                                    </div>
+                                    <x-input-error for="konten" class="mt-1" />
+
+                                    <!-- Gambar -->
+                                    <div class="mb-4">
+                                        <x-label for="gambar" value="Diskusi Gambar" />
+                                        <input wire:model="gambar" id="gambar" type="file" class="w-full mt-1"
+                                            accept="image" />
+                                        @if ($gambar instanceof \Illuminate\Http\UploadedFile)
+                                            <img src="{{ $gambar->temporaryUrl() }}"
+                                                class="object-contain mt-2 max-h-48" alt="Preview Gambar Pertanyaan">
+                                        @elseif ($oldGambarBerita)
+                                            <img src="{{ asset('storage/' . $oldGambarBerita) }}"
+                                                class="object-contain mt-2 max-h-48" alt="Gambar Pertanyaan Lama">
+                                        @endif
+
+                                        <x-input-error for="gambar" class="mt-1" />
+                                    </div>
+
+                                    <!-- Footer -->
+                                    <div class="flex justify-end mt-4">
+                                        <x-secondary-button type="button" wire:navigate href="{{ route('berita') }}">
+                                            Batal
+                                        </x-secondary-button>
+                                        <x-button class="ms-3" wire:click="save">
+                                            Simpan
+                                        </x-button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                    @endif
-                    <x-input-error for="form.gambar_pertanyaan" class="mt-1" />
-                </div>
-
-                <!-- Diskusi Gambar -->
-                <div class="col-span-12">
-                    <x-label for="form.diskusi_gambar" value="Diskusi Gambar" />
-                    <input wire:model="form.diskusi_gambar" id="form.diskusi_gambar" type="file" class="w-full mt-1"
-                        accept=".jpg,.jpeg,.png" />
-                    <!-- Pratinjau Diskusi Gambar -->
-                    @if ($diskusiGambarPreview)
-                        <div class="mt-2">
-                            <span>Pratinjau Diskusi Gambar:</span>
-                            <img src="{{ $diskusiGambarPreview }}" alt="Pratinjau Diskusi Gambar" class="mt-2"
-                                style="max-width: 200px;">
-                        </div>
-                    @endif
-                    <x-input-error for="form.diskusi_gambar" class="mt-1" />
-                </div>
-
-
-                <!-- Diskusi -->
-                <div class="col-span-12">
-                    <x-label for="form.diskusi" value="Diskusi" />
-                    <x-input wire:model="form.diskusi" id="form.diskusi" type="text" class="w-full mt-1" />
-                    <x-input-error for="form.diskusi" class="mt-1" />
-                </div>
-
-                <!-- Jawaban -->
-                <div class="col-span-12">
-                    <x-label for="form.jawaban" value="Jawaban" />
-                    <select wire:model="form.jawaban" id="form.jawaban" class="w-full mt-1" required>
-                        <!-- Populate options for jawaban -->
-                        <option value="">Pilih Jawaban</option>
-                        <option value="1">Jawaban 1</option>
-                        <option value="2">Jawaban 2</option>
-                        <option value="3">Jawaban 3</option>
-                        <option value="4">Jawaban 4</option>
-                    </select>
-                    <x-input-error for="form.jawaban" class="mt-1" />
+                    </div>
                 </div>
             </div>
-        </x-slot>
+        </div>
 
-        <x-slot name="footer">
-            <x-secondary-button @click="$wire.set('modalBeritaCreate', false)" wire:loading.attr="disabled">
-                Batal
-            </x-secondary-button>
+        @push('scripts')
+            <script>
+                var options = {
+                    filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+                    filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+                    filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+                    filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+                };
 
-            <x-button class="ms-3" wire:loading.attr="disabled">
-                Simpan
-            </x-button>
-        </x-slot>
-    </x-dialog-modal>
+                // Menggunakan CKEDITOR.replace dengan opsi konfigurasi
+                var editor = CKEDITOR.replace('konten', {
+                    ...options,
+                    versionCheck: false,
+                    extraPlugins: 'autogrow,image2',
+                    autoGrow_onStartup: true,
+                    autoGrow_minHeight: 300,
+                    autoGrow_maxHeight: 700,
+                    autoGrow_bottomSpace: 50,
+                    toolbar: [{
+                            name: 'clipboard',
+                            items: ['Cut', 'Copy', 'Paste', '-', 'Undo', 'Redo']
+                        },
+                        {
+                            name: 'editing',
+                            items: ['Find', 'Replace']
+                        },
+                        {
+                            name: 'basicstyles',
+                            items: ['Bold', 'Italic', 'Underline', '-', 'Strike', 'RemoveFormat']
+                        },
+                        {
+                            name: 'paragraph',
+                            items: ['NumberedList', 'BulletedList', '-', 'Blockquote']
+                        },
+                        {
+                            name: 'links',
+                            items: ['Link', 'Unlink']
+                        },
+                        {
+                            name: 'insert',
+                            items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar']
+                        },
+                        {
+                            name: 'styles',
+                            items: ['Styles', 'Format', 'Font', 'FontSize']
+                        }
+                    ]
+                });
+
+                // Menangani perubahan data pada editor
+                editor.on('change', function(event) {
+                    console.log(event.editor.getData());
+                    @this.set('konten', event.editor.getData());
+                });
+
+                // Event listener untuk tombol submit
+                document.querySelector("#submit").addEventListener("click", function() {
+                    console.log(editor.getData());
+                    @this.set('konten', editor.getData());
+                });
+            </script>
+        @endpush
+
+    </div>
 </div>

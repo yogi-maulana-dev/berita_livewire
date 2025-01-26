@@ -13,9 +13,10 @@
         <x-slot name="content">
             <div class="grid grid-cols-12 gap-4">
                 <div class="col-span-12">
-                    <x-label for="form.name" value="Nama Kategori" />
-                    <x-input wire:model="form.name" id="form.name" type="text" class="mt-1 w-full" required autocomplete="form.name" />
-                    <x-input-error for="form.name" class="mt-1" />
+                    <x-label for="form.nama" value="Nama Kategori" />
+                    <x-input wire:model="form.nama" id="form.nama" type="text" class="mt-1 w-full" required
+                        autocomplete="form.nama" />
+                    <x-input-error for="form.nama" class="mt-1" />
                 </div>
             </div>
         </x-slot>
